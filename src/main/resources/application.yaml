@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: podcast-streaming
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/podcaststreaming
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+    show-sql: true
+    generate-ddl: true
+
+header:
+  request:
+    api-key: 33b642b4-8d52-41ba-8cf1-59e0225e65f0
+
+server:
+  port: 9090
