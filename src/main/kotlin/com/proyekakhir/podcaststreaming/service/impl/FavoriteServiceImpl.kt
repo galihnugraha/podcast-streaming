@@ -83,7 +83,30 @@ class FavoriteServiceImpl(
     }
 
     override fun update(token: String, id: Int, req: ReqFavoriteDto): ResMessageDto<ResFavoriteDto> {
-        TODO("Not yet implemented")
+        val claim = JwtGenerator().decodeJwt(token)
+
+        val favoriteFind = favoriteRepository.findById(id).orElseThrow{ DataNotFound("Favorite Content Not Found") }
+
+        if (claim["username"].toString() != favoriteFind.userAdded)
+            throw DataNotFound("Favorite Content Not Found")
+
+        val podcast = podcastRepository.findById(req.idPodcast!!.toInt())
+                .orElseThrow{ DataNotFound("Podcast Not Found") }
+
+        val now = LocalDateTime.now()
+
+        favoriteFind.idPodcast = podcast
+        favoriteFind.dtUpdated = now
+
+        val updateFavorite = favoriteRepository.save(favoriteFind)
+        val response = ResFavoriteDto(
+                idFavorite = updateFavorite.idFavorite!!,
+                titlePodcast = updateFavorite.idPodcast!!.title,
+                userAdded = updateFavorite.userAdded!!,
+                dtAdded = updateFavorite.dtAdded!!,
+                dtUpdated = updateFavorite.dtUpdated!!
+        )
+        return ResMessageDto(data = response)
     }
 
     override fun delete(token: String, id: Int): ResMessageDto<String> {

@@ -37,7 +37,7 @@ class PodcastController(
     @PutMapping
     fun update(
             @RequestParam id: Int,
-            @RequestBody request: ReqPodcastDto
+            @Valid @RequestBody request: ReqPodcastDto
     ): ResponseEntity<ResMessageDto<ResPodcastDto>> {
         val response = podcastService.update(id, request)
         return ResponseEntity.ok(response)

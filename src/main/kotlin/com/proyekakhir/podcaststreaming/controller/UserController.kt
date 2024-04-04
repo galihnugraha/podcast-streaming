@@ -34,7 +34,7 @@ class UserController(
     @PutMapping
     fun update(
             @RequestParam id: Int,
-            @RequestBody request: ReqUserDto
+            @Valid @RequestBody request: ReqUserDto
     ): ResponseEntity<ResMessageDto<ResUserDto>> {
         val response = userService.update(id, request)
         return ResponseEntity.ok(response)

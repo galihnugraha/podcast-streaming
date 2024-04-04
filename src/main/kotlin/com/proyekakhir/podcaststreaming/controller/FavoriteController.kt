@@ -38,6 +38,16 @@ class FavoriteController(
         return ResponseEntity.ok(response)
     }
 
+    @PutMapping
+    fun update(
+            @RequestHeader("token") token:String,
+            @RequestParam id: Int,
+            @Valid @RequestBody request: ReqFavoriteDto
+    ): ResponseEntity<ResMessageDto<ResFavoriteDto>> {
+        val response = favoriteService.update(token, id, request)
+        return ResponseEntity.ok(response)
+    }
+
     @DeleteMapping("/delete")
     fun delete(
             @RequestHeader("token") token:String,

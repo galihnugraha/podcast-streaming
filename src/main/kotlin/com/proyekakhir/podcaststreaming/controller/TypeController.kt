@@ -34,7 +34,7 @@ class TypeController(
     @PutMapping
     fun update(
             @RequestParam id: String,
-            @RequestBody request: ReqTypeDto
+            @Valid @RequestBody request: ReqTypeDto
     ): ResponseEntity<ResMessageDto<ResTypeDto>> {
         val response = typeService.update(id, request)
         return ResponseEntity.ok(response)
