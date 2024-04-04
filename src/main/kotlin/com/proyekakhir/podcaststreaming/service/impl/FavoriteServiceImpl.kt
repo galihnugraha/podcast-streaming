@@ -23,6 +23,11 @@ class FavoriteServiceImpl(
         val podcast = podcastRepository.findById(req.idPodcast!!.toInt())
                 .orElseThrow{ DataNotFound("Podcast Not Found") }
 
+        if (claim["type"].toString() == "Free") {
+            if (claim["type"].toString() != podcast.idType!!.type)
+                throw DataNotFound("Podcast Not Found")
+        }
+
         val now = LocalDateTime.now()
 
         val insert = FavoriteEntity(
