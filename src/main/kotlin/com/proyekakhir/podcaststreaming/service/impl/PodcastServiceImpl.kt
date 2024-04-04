@@ -156,12 +156,14 @@ class PodcastServiceImpl(
     override fun search(token: String, s: String): ResMessageDto<List<ResPodcastDto>> {
         val claim = JwtGenerator().decodeJwt(token)
 
-        val genreName = genreRepository.findByGenre(s)
+//        val genreName = genreRepository.findByGenre(s)
+//
+//        val podcasts = if (genreName != null)
+//            podcastRepository.findAllByIdGenre(genreName)
+//        else
+//            podcastRepository.findByTitle(s)
 
-        val podcasts = if (genreName != null)
-            podcastRepository.findAllByIdGenre(genreName)
-        else
-            podcastRepository.findByTitle(s)
+        val podcasts = podcastRepository.findByGenreAndTitle(s)
 
         val response = arrayListOf<ResPodcastDto>()
         for (podcast in podcasts){
